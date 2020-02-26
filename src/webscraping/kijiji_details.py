@@ -4,6 +4,11 @@ from src.core.connect import create_engine_pgsql
 import time
 
 
+def parse_url(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    return soup
+
 def scrape_innerdata(DB_CONN,**kwargs):
     task_instance = kwargs['ti']
     engine = create_engine_pgsql(DB_CONN)
@@ -19,8 +24,7 @@ def scrape_innerdata(DB_CONN,**kwargs):
 
 
 def is_expired(url):
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, "html.parser")
+    soup = parse_url(url)
     try:
         expired = soup.find_all('div', attrs={'class': 'expired-ad-container'})
         if expired:
