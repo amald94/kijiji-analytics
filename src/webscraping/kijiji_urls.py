@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from src.core.connect import create_engine_pgsql
+import time
 
 url = 'https://www.kijiji.ca/b-for-rent/ontario'
 baseurl = 'https://www.kijiji.ca'
@@ -14,6 +15,7 @@ ad_ids = []
 def getUrls(noPages, **kwargs):
     task_instance = kwargs['ti']
     for i in range(noPages):
+        print('current page : '+str(i))
         url_final = url+pageNos+str(i)+baseForOntario
         response = requests.get(url_final)
         soup = BeautifulSoup(response.text, "html.parser")
@@ -47,17 +49,20 @@ def insert_adurls(DB_CONN,**kwargs):
     print(ad_urls)
 
     #create a temp table to insert scrapted urls
-    engine.execute('CREATE TABLE IF NOT EXISTS kijiji_tmp(id text PRIMARY KEY, url text)')
-    engine.execute('CREATE TABLE IF NOT EXISTS kijiji(id text PRIMARY KEY, url text)')
-    q2 = 'INSERT INTO kijiji (id, url) \
-    SELECT kijiji_tmp.id, kijiji_tmp.url \
+    engine.execute('CREATE TABLE IF NOT EXISTS kijiji_tmp(id text PRIMARY KEY, url text, status text, \
+                    created_at TIMESTAMPTZ DEFAULT Now())')
+    engine.execute('CREATE TABLE IF NOT EXISTS kijiji(id text PRIMARY KEY, url text,status text, \
+                    created_at TIMESTAMPTZ DEFAULT Now())')
+    q2 = 'INSERT INTO kijiji (id, url, status) \
+    SELECT kijiji_tmp.id, kijiji_tmp.url, kijiji_tmp.status\
     FROM kijiji_tmp \
     ON CONFLICT DO NOTHING;'
 
     for i in range(len(url_ids)):
-        engine.execute("INSERT INTO kijiji_tmp (id, url) VALUES (%s, %s)",url_ids[i],ad_urls[i])
+        engine.execute("INSERT INTO kijiji_tmp (id, url,status) VALUES (%s, %s, %s)",url_ids[i],ad_urls[i],'pending')
 
     engine.execute(q2)
     #delete datas from temp table
     engine.execute('TRUNCATE TABLE kijiji_tmp')
+
 
