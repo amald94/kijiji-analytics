@@ -2,4 +2,6 @@
 files/*
 */logs/*
 logs/*
+*/Movie/*
+Movie/*
 airflow.db
