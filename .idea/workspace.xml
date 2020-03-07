@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98ee2528-b028-4874-8a38-dd2728a0fb46" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/core/dbcreate.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/rent_prediction.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/text_processing.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airflow-webserver.pid" beforeDir="false" afterPath="$PROJECT_DIR$/airflow-webserver.pid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dags/scrape_sites.py" beforeDir="false" afterPath="$PROJECT_DIR$/dags/scrape_sites.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/webscraping/kijiji_details.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/webscraping/kijiji_details.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/webscraping/kijiji_urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/webscraping/kijiji_urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unittests.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/unittests.cfg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

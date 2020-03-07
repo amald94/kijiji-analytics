@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from src.core.connect import create_engine_pgsql
+from src.core.dbcreate import create_db
 import time
 
 url = 'https://www.kijiji.ca/b-for-rent/ontario'
@@ -48,11 +49,8 @@ def insert_adurls(DB_CONN,**kwargs):
     engine = create_engine_pgsql(DB_CONN)
     print(ad_urls)
 
-    #create a temp table to insert scrapted urls
-    engine.execute('CREATE TABLE IF NOT EXISTS kijiji_tmp(id text PRIMARY KEY, url text, status text, \
-                    created_at TIMESTAMPTZ DEFAULT Now())')
-    engine.execute('CREATE TABLE IF NOT EXISTS kijiji(id text PRIMARY KEY, url text,status text, \
-                    created_at TIMESTAMPTZ DEFAULT Now())')
+    #insert scrapted urls
+
     q2 = 'INSERT INTO kijiji (id, url, status) \
     SELECT kijiji_tmp.id, kijiji_tmp.url, kijiji_tmp.status\
     FROM kijiji_tmp \
